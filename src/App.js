@@ -1,9 +1,15 @@
 import React from 'react'
 import './App.css';
-
+import content from './cap.PNG'
 function App(){
   return ( 
     <div className="root">
+      <header>
+      <span id="gmail">Gmail</span>
+      <span id="img">이미지</span>
+      <img id="content" src={content} alt="목록"/>
+      <div id="login"></div>
+      </header>
       <img src = "http://www.bloter.net/wp-content/uploads/2018/09/google_PNG19644.png"
       alt = "google" id="logo"/>
       <div className="searchBox">
@@ -16,6 +22,24 @@ function App(){
       <input type = "button" value = "Google 검색" id="searchBtn"/>
       <input type = "button" value = "I'm Feeling Lucky" id="LuckyBtn"/>
       </div>
+      <div className="bottom">
+            <div>
+                <div className="korea">대한민국</div>  
+                    <div className="firstButton">
+                        <span id="ad">광고</span>
+                        <span id="bis">비즈니스</span> 
+                        <span id="inform">Google 정보</span> 
+                        <span id="bsearch">검색의 원리</span>
+                    </div>
+                </div>
+            <div>
+            <div className="secondButton">
+            <span id="person">개인정보처리 방침</span>
+            <span id="license">약관</span>
+            <span id="set">설정</span>
+            </div>
+        </div>
+        </div>
     </div>  
     );
 }
