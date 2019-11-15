@@ -47,6 +47,14 @@ class App extends React.Component{
         this.setState({items:newItems});
     }
 
+    change = (idx, input) => {
+        const items = this.state.items;
+        items[idx] = input;
+        this.setState({
+            items
+        });
+    }
+
     render(){
         return (
             <div className="aroot">
@@ -57,15 +65,13 @@ class App extends React.Component{
             {this.state.items.map((value, idx) => (
                 <TodoItem 
                 key={Math.random()} 
+                index={idx}
                 value={value} 
                 className="list" 
                 onClickDel={()=>{
                     this.onClickDel(idx);
                 }}
-                onClickMod={()=>{
-                    const value = prompt("수정값 입력");
-                    this.onClickMod(value,idx);
-                }}/>
+                change={this.change}/>
             ))}
             </div>
         );
