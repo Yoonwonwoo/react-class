@@ -1,79 +1,84 @@
-import React from 'react';
-import styled from 'styled-components';
+// App.jsx
+import React from "react";
 import TodoItem from "./TodoItem";
-import './App.css'
+import "./App.css";
 
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-class App extends React.Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            items:[],
-            value : ""
-        };
-    }
-    
-    onClickAdd = e => {
-        const items = this.state.items;
-        items.push(this.state.value);
-        this.setState({
-            items
-        });
+    this.state = {
+      items: [],
+      value: "",
+      editItem: -1,
+      editValue: ""
     };
+  }
 
-    onClickDel = idx => {
-        const newItems = [...this.state.items];
-        newItems.splice(idx,1);
-        this.setState({items:newItems});
-        console.log(idx);
+  onClickAdd = e => {
+    const items = this.state.items;
+    items.push(this.state.value);
+    this.setState({
+      items
+    });
+  };
 
-        // const items = this.state.items;
-        // this.setState ({
-        //     items: [...items.slice(0, idx), ...items.slice(idx+1)]
-        // });
-    };
+  onClickDel = idx => {
+    const newItems = [...this.state.items];
+    newItems.splice(idx, 1);
+    this.setState({ items: newItems });
+  };
 
-    onChange = e => {
-        this.setState({value: e.target.value});
-    };
+  onClickMod = idx => {
+    this.setState({ editItem: idx, editValue: this.state.value });
+  };
 
-    onClickMod = (value, idx) => {
-        const newItems = [
-            ...this.state.items.slice(0,idx), //처음부터 idx 전 배열까지 리턴
-            value,
-            ...this.state.items.slice(idx+1) //idx에 있는 값만 빼기
-            ];
-        this.setState({items:newItems});
-    }
+  onClickConfirm = idx => {
+    const newItems = [
+      ...this.state.items.slice(0, idx),
+      this.state.editValue,
+      ...this.state.items.slice(idx + 1)
+    ];
+    this.setState({ items: newItems, editItem: -1 });
+  };
 
-    change = (idx, input) => {
-        const items = this.state.items;
-        items[idx] = input;
-        this.setState({
-            items
-        });
-    }
+  onChageValue = e => {
+    this.setState({ editValue: e.target.value });
+  };
 
-    render(){
-        return (
-            <div className="aroot">
-                <div className="inputBox">
-                   <input type="text" onChange={this.onChange} className="input"/>
-                   <button onClick={this.onClickAdd} className="addBtn">추가</button>
-                </div>
-            {this.state.items.map((value, idx) => (
-                <TodoItem 
-                key={Math.random()} 
-                index={idx}
-                value={value} 
-                className="list" 
-                onClickDel={()=>{
-                    this.onClickDel(idx);
-                }}
-                change={this.change}/>
-            ))}
-            </div>
-        );
-    }
-}export default App;
+  onChange = e => {
+    this.setState({ value: e.target.value });
+  };
+
+  render() {
+    return (
+      <div className="aroot">
+        <div className="inputBox">
+          <input type="text" onChange={this.onChange} className="input" />
+          <button onClick={this.onClickAdd} className="addBtn">
+            추가
+          </button>
+        </div>
+        {this.state.items.map((value, idx) => (
+          <TodoItem
+            // key={Math.random() + idx}
+            value={value}
+            className="list"
+            onClickDel={() => this.onClickDel(idx)}
+            onClickMod={() => {
+              this.onClickMod(idx);
+            }}
+            // 수정 할 때 사용하는 props
+            isEdit={this.state.editItem === idx}
+            editValue={this.state.editValue}
+            onChageValue={this.onChageValue}
+            onClickConfirm={() => {
+              this.onClickConfirm(idx);
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+}
+export default App;
