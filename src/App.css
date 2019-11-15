@@ -16,6 +16,7 @@
     border-radius: 22px;
     border: #c5c3c3 1px solid;
     padding-left: 16px;
+    outline: none;
 }
 
 .addBtn {
